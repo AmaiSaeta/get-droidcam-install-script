@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+#########################################################################
+# Get the install script of DroidCam Linux client automaticaly.
+
+ref2text() {
+	sed \
+		-e 's/&gt;/>/g' \
+		-e 's/&lt;/</g' \
+		-e 's/&nbsp;/ /g' \
+		-e 's/&quot;/"/g' \
+		-e 's/&amp;/\&/g'
+}
+
+curl -Lso- https://www.dev47apps.com/droidcam/linux/ \
+	| xmllint --html --xpath '//*[@id="inst"]/p[1]/code/text()' - 2>/dev/null \
+	| ref2text
+
+# vim: ft=sh
